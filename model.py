@@ -160,6 +160,8 @@ def predict_forest(forest, features):
         tree_predictions.append(predict_tree(entry['tree'], features))
     return np.asarray(combine_predictions(np.asarray(tree_predictions)))
 
-# Step 15 - accuracy (not yet solved)
-# TODO: implement
+# Step 15 - accuracy
+def accuracy(predictions, labels):
+    L = predictions == labels
+    return L.sum() / len(L)
 
