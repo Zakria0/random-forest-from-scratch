@@ -124,8 +124,26 @@ import numpy as np
 def feature_subset(num_features, num_to_pick, rng):
     return rng.permutation(num_features)[:num_to_pick]
 
-# Step 12 - train_forest (not yet solved)
-# TODO: implement
+# Step 12 - train_forest
+import numpy as np
+
+def train_forest(features, labels, num_trees=10, max_depth=10, min_samples_split=2, num_features_per_split=None, random_state=0):
+    n_samples, n_features = features.shape
+
+    forest = []
+    rng = np.random.default_rng(random_state)
+    if num_features_per_split is None:
+        num_features_per_split = max(1, int(np.round(np.sqrt(n_features))))
+    
+    for _ in range(num_trees):
+        sample_features, sample_labels = bootstrap_sample(features, labels, rng=rng)
+        feature_idx = feature_subset(n_features, num_features_per_split, rng=rng)
+
+        tree = build_tree(sample_features, sample_labels, max_depth=max_depth, min_samples_split=min_samples_split, feature_subset=feature_idx, depth=0)
+
+        forest.append({'tree': tree, 'feature_indices': feature_idx})
+    
+    return forest
 
 # Step 13 - combine_predictions (not yet solved)
 # TODO: implement
