@@ -17,8 +17,12 @@ def impurity(labels):
     
     return 1 - sum([p[key]**2 for key in p])
 
-# Step 2 - split_dataset (not yet solved)
-# TODO: implement
+# Step 2 - split_dataset
+import numpy as np
+
+def split_dataset(features, labels, feature_index, threshold):
+    mask = features[:, feature_index] > threshold
+    return features[~mask], labels[~mask], features[mask], labels[mask]
 
 # Step 3 - split_score (not yet solved)
 # TODO: implement
