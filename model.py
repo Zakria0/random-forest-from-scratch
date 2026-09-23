@@ -89,8 +89,14 @@ def build_tree(features, labels, max_depth=10, min_samples_split=2, feature_subs
     
     return {'leaf': False, 'feature_index': fi, 'threshold': t, 'left': build_tree(left_features, left_labels, depth=depth+1, feature_subset=feature_subset, max_depth=max_depth, min_samples_split=min_samples_split), 'right': build_tree(right_features, right_labels, depth=depth+1, feature_subset=feature_subset, max_depth=max_depth, min_samples_split=min_samples_split)}
 
-# Step 8 - predict_example_tree (not yet solved)
-# TODO: implement
+# Step 8 - predict_example_tree
+def predict_example_tree(tree, example):
+    if tree['leaf']:
+        return tree['prediction']
+    if example[tree['feature_index']] <= tree['threshold']:
+        return predict_example_tree(tree['left'], example)
+    else:
+        return predict_example_tree(tree['right'], example)
 
 # Step 9 - predict_tree (not yet solved)
 # TODO: implement
