@@ -118,8 +118,11 @@ def bootstrap_sample(features, labels, rng):
     idx = rng.integers(0, n, size=n) 
     return features[idx], labels[idx]
 
-# Step 11 - feature_subset (not yet solved)
-# TODO: implement
+# Step 11 - feature_subset
+import numpy as np
+
+def feature_subset(num_features, num_to_pick, rng):
+    return rng.permutation(num_features)[:num_to_pick]
 
 # Step 12 - train_forest (not yet solved)
 # TODO: implement
