@@ -145,8 +145,13 @@ def train_forest(features, labels, num_trees=10, max_depth=10, min_samples_split
     
     return forest
 
-# Step 13 - combine_predictions (not yet solved)
-# TODO: implement
+# Step 13 - combine_predictions
+def combine_predictions(tree_predictions):
+    votes = []
+    for sample_votes in np.asarray(tree_predictions).T:
+        values, counts = np.unique(sample_votes, return_counts=True)
+        votes.append(values[np.argmax(counts)])
+    return np.asarray(votes)
 
 # Step 14 - predict_forest (not yet solved)
 # TODO: implement
