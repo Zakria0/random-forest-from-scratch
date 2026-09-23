@@ -70,8 +70,24 @@ def leaf_prediction(labels):
     classes, counts = np.unique(labels, return_counts=True)
     return int(classes[np.argmax(counts)])
 
-# Step 7 - build_tree (not yet solved)
-# TODO: implement
+# Step 7 - build_tree
+def build_tree(features, labels, max_depth=10, min_samples_split=2, feature_subset=None, depth=0):
+    if should_stop(labels, depth, max_depth, min_samples_split):
+        return {'leaf': True, 'prediction': leaf_prediction(labels)}
+    
+    candidate_features = range(features.shape[1]) if feature_subset is None else list(feature_subset)
+    
+    split = best_split(features, labels, candidate_features)
+    fi, t = split["feature_index"], split["threshold"]
+    if fi is None:
+        return {'leaf': True, 'prediction': leaf_prediction(labels)}
+    
+    left_features, left_labels, right_features, right_labels = split_dataset(features, labels, fi, t)
+    
+    if not len(left_features) or not len(right_features):
+        return {'leaf': True, 'prediction': leaf_prediction(labels)}
+    
+    return {'leaf': False, 'feature_index': fi, 'threshold': t, 'left': build_tree(left_features, left_labels, depth=depth+1, feature_subset=feature_subset, max_depth=max_depth, min_samples_split=min_samples_split), 'right': build_tree(right_features, right_labels, depth=depth+1, feature_subset=feature_subset, max_depth=max_depth, min_samples_split=min_samples_split)}
 
 # Step 8 - predict_example_tree (not yet solved)
 # TODO: implement
