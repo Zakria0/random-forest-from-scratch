@@ -153,8 +153,12 @@ def combine_predictions(tree_predictions):
         votes.append(values[np.argmax(counts)])
     return np.asarray(votes)
 
-# Step 14 - predict_forest (not yet solved)
-# TODO: implement
+# Step 14 - predict_forest
+def predict_forest(forest, features):
+    tree_predictions = []
+    for entry in forest:
+        tree_predictions.append(predict_tree(entry['tree'], features))
+    return np.asarray(combine_predictions(np.asarray(tree_predictions)))
 
 # Step 15 - accuracy (not yet solved)
 # TODO: implement
